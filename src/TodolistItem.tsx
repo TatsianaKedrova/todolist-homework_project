@@ -1,11 +1,11 @@
 import "./App.css";
 import { Button } from "./Button";
-import { useState } from "react";
 
 export type TodolistItemProps = {
   title: string;
   tasks: Task[];
   date?: string;
+  deleteTask: (taskId: number) => void;
 };
 export type Task = {
   title: string;
@@ -13,11 +13,12 @@ export type Task = {
   id: number;
 };
 
-export const TodolistItem = ({ title, tasks, date }: TodolistItemProps) => {
-  const [tasksList, setTasks] = useState<Array<Task>>(tasks);
-  const removeTask = (taskId: number) => {
-    setTasks(tasksList.filter((task) => task.id !== taskId));
-  };
+export const TodolistItem = ({
+  title,
+  tasks,
+  date,
+  deleteTask,
+}: TodolistItemProps) => {
   return (
     <div>
       <h3>{title}</h3>
@@ -29,12 +30,18 @@ export const TodolistItem = ({ title, tasks, date }: TodolistItemProps) => {
         <p>No tasks available</p>
       ) : (
         <ul>
-          {tasksList.map((task) => {
+          {tasks.map((task) => {
             return (
               <li key={task.id}>
                 <input type="checkbox" checked={task.isDone} />{" "}
                 <span>{task.title}</span>
-                <button onClick={() => removeTask(task.id)}>x</button>
+                <button
+                  onClick={() => {
+                    deleteTask(task.id);
+                  }}
+                >
+                  x
+                </button>
               </li>
             );
           })}

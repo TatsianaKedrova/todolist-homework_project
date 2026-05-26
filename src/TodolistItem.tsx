@@ -1,3 +1,4 @@
+import { FilterValues } from "./App";
 import "./App.css";
 import { Button } from "./Button";
 
@@ -6,6 +7,7 @@ export type TodolistItemProps = {
   tasks: Task[];
   date?: string;
   deleteTask: (taskId: number) => void;
+  changeFilter: (filter: FilterValues) => void;
 };
 export type Task = {
   title: string;
@@ -18,6 +20,7 @@ export const TodolistItem = ({
   tasks,
   date,
   deleteTask,
+  changeFilter,
 }: TodolistItemProps) => {
   return (
     <div>
@@ -35,22 +38,19 @@ export const TodolistItem = ({
               <li key={task.id}>
                 <input type="checkbox" checked={task.isDone} />{" "}
                 <span>{task.title}</span>
-                <button
-                  onClick={() => {
-                    deleteTask(task.id);
-                  }}
-                >
-                  x
-                </button>
+                <Button title="x" actionOnClick={() => deleteTask(task.id)} />
               </li>
             );
           })}
         </ul>
       )}
       <div>
-        <Button title="All" />
-        <Button title="Active" />
-        <Button title="Completed" />
+        <Button title={"All"} actionOnClick={() => changeFilter("all")} />
+        <Button title={"Active"} actionOnClick={() => changeFilter("active")} />
+        <Button
+          title={"Completed"}
+          actionOnClick={() => changeFilter("completed")}
+        />
       </div>
       <div>{date}</div>
     </div>

@@ -1,8 +1,8 @@
 type Props = {
-  title: string;
+  children: React.ReactNode;
   actionOnClick?: () => void;
 };
 
-export const Button = ({ title, actionOnClick }: Props) => {
-  return <button onClick={actionOnClick}>{title}</button>;
+export const Button = ({ children, actionOnClick }: Props) => {
+  return <button onClick={actionOnClick}>{children}</button>;
 };

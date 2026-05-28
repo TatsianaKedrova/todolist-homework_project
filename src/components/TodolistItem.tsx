@@ -37,13 +37,12 @@ export const TodolistItem = ({
         />
       </div>
       <div>
-        <Button title={"All"} actionOnClick={() => changeFilter("all")} />
-        <Button title={"Active"} actionOnClick={() => changeFilter("active")} />
-        <Button
-          title={"Completed"}
-          actionOnClick={() => changeFilter("completed")}
-        />
-        <Button title="Delete all tasks" actionOnClick={deleteAllTasks} />
+        <Button actionOnClick={() => changeFilter("all")}>All</Button>
+        <Button actionOnClick={() => changeFilter("active")}>Active</Button>
+        <Button actionOnClick={() => changeFilter("completed")}>
+          Completed
+        </Button>
+        <Button actionOnClick={deleteAllTasks}>Delete all tasks</Button>
       </div>
       <div>{date}</div>
     </div>

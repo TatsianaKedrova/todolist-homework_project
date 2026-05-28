@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import "./App.css";
 import { Task, TodolistItem } from "./components/TodolistItem";
 
@@ -9,10 +9,12 @@ export const App = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const addNewTask = (taskTitle: string) => {
     if (!taskTitle.trim()) return;
-    setTasks((prev) => [
-      ...prev,
-      { id: crypto.randomUUID(), title: taskTitle.trim(), isDone: false },
-    ]);
+    const newTask: Task = {
+      id: crypto.randomUUID(),
+      title: taskTitle.trim(),
+      isDone: false,
+    };
+    setTasks((prev) => [...prev, newTask]);
   };
   const filteredTasks = useMemo(() => {
     switch (filter) {

@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import "./App.css";
-import { Task, TodolistItem } from "./TodolistItem";
+import { Task, TodolistItem } from "./components/TodolistItem";
 import { FullInput } from "./components/FullInput";
 
 export type FilterValues = "all" | "active" | "completed";

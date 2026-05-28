@@ -1,6 +1,6 @@
-import { FilterValues } from "./App";
-import "./App.css";
+import { FilterValues } from "../App";
 import { Button } from "./Button";
+import TaskItem from "./TaskItem";
 
 export type TodolistItemProps = {
   title: string;
@@ -33,15 +33,9 @@ export const TodolistItem = ({
         <p>No tasks available</p>
       ) : (
         <ul>
-          {tasks.map((task) => {
-            return (
-              <li key={task.id}>
-                <input type="checkbox" checked={task.isDone} />{" "}
-                <span>{task.title}</span>
-                <Button title="x" actionOnClick={() => deleteTask(task.id)} />
-              </li>
-            );
-          })}
+          {tasks.map((task) => (
+            <TaskItem key={task.id} task={task} deleteTask={deleteTask} />
+          ))}
         </ul>
       )}
       <div>
@@ -56,3 +50,19 @@ export const TodolistItem = ({
     </div>
   );
 };
+
+// {
+//   tasks.map((t) => (
+//     <li key={t.id}>
+//       <input type="checkbox" checked={t.isDone} />
+//       <span>{t.title}</span>
+//       <button
+//         onClick={() => {
+//           removeTask(t.id);
+//         }}
+//       >
+//         x
+//       </button>
+//     </li>
+//   ));
+// }

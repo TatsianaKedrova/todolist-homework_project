@@ -3,7 +3,7 @@ import { Task } from "./TodolistItem";
 
 type TaskItemProps = {
   task: Task;
-  deleteTask: (taskId: number) => void;
+  deleteTask: (taskId: string) => void;
 };
 
 const TaskItem = ({ task, deleteTask }: TaskItemProps) => {

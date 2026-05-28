@@ -1,22 +1,29 @@
 import { useState } from "react";
+import { Task } from "./TodolistItem";
+import TaskItem from "./TaskItem";
 
 type FullInputProps = {
-  messages: string[];
-  addNewMessage: (message: string) => void;
+  tasks: Task[];
+  addNewTask: (taskTile: string) => void;
+  deleteTask: (taskId: string) => void;
 };
 
-export const FullInput = ({ messages, addNewMessage }: FullInputProps) => {
+export const FullInput = ({
+  tasks,
+  addNewTask,
+  deleteTask,
+}: FullInputProps) => {
   let [title, setTitle] = useState<string>("");
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value);
   };
-  const handleAddMessage = () => {
-    addNewMessage(title);
+  const handleAddTask = () => {
+    addNewTask(title);
     setTitle("");
   };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      addNewMessage(title); // Trigger the send action
+      addNewTask(title);
       setTitle("");
     }
   };
@@ -30,11 +37,15 @@ export const FullInput = ({ messages, addNewMessage }: FullInputProps) => {
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
       />
-      <button onClick={handleAddMessage}>+</button>
+      <button onClick={handleAddTask}>+</button>
       <ul>
-        {messages.map((message, index) => (
-          <li key={index}>{message}</li>
-        ))}
+        {tasks.length === 0 ? (
+          <p>No tasks available</p>
+        ) : (
+          tasks.map((task) => (
+            <TaskItem key={task.id} task={task} deleteTask={deleteTask} />
+          ))
+        )}
       </ul>
     </div>
   );

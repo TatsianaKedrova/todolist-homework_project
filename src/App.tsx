@@ -1,26 +1,19 @@
 import { useCallback, useMemo, useState } from "react";
 import "./App.css";
 import { Task, TodolistItem } from "./components/TodolistItem";
-import { FullInput } from "./components/FullInput";
 
 export type FilterValues = "all" | "active" | "completed";
 
 export const App = () => {
   const [filter, setFilter] = useState<FilterValues>("all");
-  const [tasks, setTasks] = useState<Task[]>([
-    { id: 1, title: "HTML&CSS", isDone: true },
-    { id: 2, title: "JS", isDone: true },
-    { id: 3, title: "ReactJS", isDone: false },
-    { id: 4, title: "Redux", isDone: false },
-    { id: 5, title: "Typescript", isDone: false },
-    { id: 6, title: "RTK query", isDone: false },
-  ]);
-  const [messages, setMessages] = useState<string[]>([]);
-  const addNewMessage = (message: string) => {
-    if (!message.trim()) return;
-    setMessages((prev) => [...prev, message.trim()]);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const addNewTask = (taskTitle: string) => {
+    if (!taskTitle.trim()) return;
+    setTasks((prev) => [
+      ...prev,
+      { id: crypto.randomUUID(), title: taskTitle.trim(), isDone: false },
+    ]);
   };
-
   const filteredTasks = useMemo(() => {
     switch (filter) {
       case "active":
@@ -32,7 +25,7 @@ export const App = () => {
     }
   }, [tasks, filter]);
 
-  const deleteTaskFunc = useCallback((taskId: number) => {
+  const deleteTaskFunc = useCallback((taskId: string) => {
     setTasks((prevTasks) => prevTasks.filter((t) => t.id !== taskId));
   }, []);
   const changeFilter = useCallback(
@@ -48,8 +41,8 @@ export const App = () => {
         tasks={filteredTasks}
         deleteTask={deleteTaskFunc}
         changeFilter={changeFilter}
+        addNewTask={addNewTask}
       />
-      <FullInput addNewMessage={addNewMessage} messages={messages} />
     </div>
   );
 };

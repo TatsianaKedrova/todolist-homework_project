@@ -1,18 +1,19 @@
 import { FilterValues } from "../App";
 import { Button } from "./Button";
-import TaskItem from "./TaskItem";
+import { FullInput } from "./FullInput";
 
 export type TodolistItemProps = {
   title: string;
   tasks: Task[];
   date?: string;
-  deleteTask: (taskId: number) => void;
+  deleteTask: (taskId: string) => void;
   changeFilter: (filter: FilterValues) => void;
+  addNewTask: (taskTitle: string) => void;
 };
 export type Task = {
   title: string;
   isDone: boolean;
-  id: number;
+  id: string;
 };
 
 export const TodolistItem = ({
@@ -21,23 +22,18 @@ export const TodolistItem = ({
   date,
   deleteTask,
   changeFilter,
+  addNewTask,
 }: TodolistItemProps) => {
   return (
     <div>
       <h3>{title}</h3>
       <div>
-        <input />
-        <button>+</button>
+        <FullInput
+          addNewTask={addNewTask}
+          tasks={tasks}
+          deleteTask={deleteTask}
+        />
       </div>
-      {tasks.length === 0 ? (
-        <p>No tasks available</p>
-      ) : (
-        <ul>
-          {tasks.map((task) => (
-            <TaskItem key={task.id} task={task} deleteTask={deleteTask} />
-          ))}
-        </ul>
-      )}
       <div>
         <Button title={"All"} actionOnClick={() => changeFilter("all")} />
         <Button title={"Active"} actionOnClick={() => changeFilter("active")} />

@@ -15,9 +15,10 @@ export const App = () => {
     { id: 5, title: "Typescript", isDone: false },
     { id: 6, title: "RTK query", isDone: false },
   ]);
-  const [message, setMessage] = useState<string>("");
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMessage(e.target.value);
+  const [messages, setMessages] = useState<string[]>([]);
+  const addNewMessage = (message: string) => {
+    if (!message.trim()) return;
+    setMessages((prev) => [...prev, message.trim()]);
   };
 
   const filteredTasks = useMemo(() => {
@@ -48,7 +49,7 @@ export const App = () => {
         deleteTask={deleteTaskFunc}
         changeFilter={changeFilter}
       />
-      <FullInput message={message} handleInputChange={handleInputChange} />
+      <FullInput addNewMessage={addNewMessage} messages={messages} />
     </div>
   );
 };

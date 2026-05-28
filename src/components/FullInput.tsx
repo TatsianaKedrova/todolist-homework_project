@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Task } from "./TodolistItem";
 import TaskItem from "./TaskItem";
 
@@ -16,19 +16,23 @@ export const FullInput = ({
   let [title, setTitle] = useState<string>("");
   const inputRef = React.useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value);
   };
   const handleAddTask = () => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
     addNewTask(title);
     setTitle("");
   };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       addNewTask(title);
+      inputRef.current?.blur();
       setTitle("");
     }
   };

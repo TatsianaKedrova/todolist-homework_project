@@ -25,15 +25,15 @@ export const App = () => {
     }
   }, [tasks, filter]);
 
-  const deleteTaskFunc = useCallback((taskId: string) => {
+  const deleteTaskFunc = (taskId: string) => {
     setTasks((prevTasks) => prevTasks.filter((t) => t.id !== taskId));
-  }, []);
-  const changeFilter = useCallback(
-    (filter: FilterValues) => {
-      setFilter(filter);
-    },
-    [filter],
-  );
+  };
+  const changeFilter = (filter: FilterValues) => {
+    setFilter(filter);
+  };
+  const deleteAllTasks = () => {
+    setTasks([]);
+  };
   return (
     <div className="app">
       <TodolistItem
@@ -42,6 +42,7 @@ export const App = () => {
         deleteTask={deleteTaskFunc}
         changeFilter={changeFilter}
         addNewTask={addNewTask}
+        deleteAllTasks={deleteAllTasks}
       />
     </div>
   );

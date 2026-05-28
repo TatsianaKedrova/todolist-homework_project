@@ -9,6 +9,7 @@ export type TodolistItemProps = {
   deleteTask: (taskId: string) => void;
   changeFilter: (filter: FilterValues) => void;
   addNewTask: (taskTitle: string) => void;
+  deleteAllTasks: () => void;
 };
 export type Task = {
   title: string;
@@ -23,6 +24,7 @@ export const TodolistItem = ({
   deleteTask,
   changeFilter,
   addNewTask,
+  deleteAllTasks,
 }: TodolistItemProps) => {
   return (
     <div>
@@ -41,24 +43,9 @@ export const TodolistItem = ({
           title={"Completed"}
           actionOnClick={() => changeFilter("completed")}
         />
+        <Button title="Delete all tasks" actionOnClick={deleteAllTasks}/>
       </div>
       <div>{date}</div>
     </div>
   );
 };
-
-// {
-//   tasks.map((t) => (
-//     <li key={t.id}>
-//       <input type="checkbox" checked={t.isDone} />
-//       <span>{t.title}</span>
-//       <button
-//         onClick={() => {
-//           removeTask(t.id);
-//         }}
-//       >
-//         x
-//       </button>
-//     </li>
-//   ));
-// }

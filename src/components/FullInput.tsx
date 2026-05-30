@@ -6,12 +6,17 @@ type FullInputProps = {
   tasks: Task[];
   addNewTask: (taskTile: string) => void;
   deleteTask: (taskId: string) => void;
+ handleCheckboxChange: (
+    taskId: string,
+    isChecked: boolean,
+  ) => void;
 };
 
 export const FullInput = ({
   tasks,
   addNewTask,
   deleteTask,
+  handleCheckboxChange,
 }: FullInputProps) => {
   let [title, setTitle] = useState<string>("");
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -53,7 +58,12 @@ export const FullInput = ({
           <p>No tasks available</p>
         ) : (
           tasks.map((task) => (
-            <TaskItem key={task.id} task={task} deleteTask={deleteTask} />
+            <TaskItem
+              key={task.id}
+              task={task}
+              deleteTask={deleteTask}
+              handleCheckboxChange={handleCheckboxChange}
+            />
           ))
         )}
       </ul>

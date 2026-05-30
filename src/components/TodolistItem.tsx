@@ -10,6 +10,10 @@ export type TodolistItemProps = {
   changeFilter: (filter: FilterValues) => void;
   addNewTask: (taskTitle: string) => void;
   deleteAllTasks: () => void;
+  handleCheckboxChange: (
+    taskId: string,
+    isChecked: boolean,
+  ) => void;
 };
 export type Task = {
   title: string;
@@ -25,6 +29,7 @@ export const TodolistItem = ({
   changeFilter,
   addNewTask,
   deleteAllTasks,
+  handleCheckboxChange,
 }: TodolistItemProps) => {
   return (
     <div>
@@ -34,6 +39,7 @@ export const TodolistItem = ({
           addNewTask={addNewTask}
           tasks={tasks}
           deleteTask={deleteTask}
+          handleCheckboxChange={handleCheckboxChange}
         />
       </div>
       <div>

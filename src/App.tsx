@@ -33,6 +33,13 @@ export const App = () => {
   const changeFilter = (filter: FilterValues) => {
     setFilter(filter);
   };
+  const handleCheckboxChange = (taskId: string, isChecked: boolean) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === taskId ? { ...task, isDone: isChecked } : task,
+      ),
+    );
+  };
   const deleteAllTasks = () => {
     setTasks([]);
   };
@@ -45,6 +52,7 @@ export const App = () => {
         changeFilter={changeFilter}
         addNewTask={addNewTask}
         deleteAllTasks={deleteAllTasks}
+        handleCheckboxChange={handleCheckboxChange}
       />
     </div>
   );

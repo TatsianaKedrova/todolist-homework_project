@@ -4,15 +4,27 @@ import { Task } from "./TodolistItem";
 type TaskItemProps = {
   task: Task;
   deleteTask: (taskId: string) => void;
+  handleCheckboxChange: (taskId: string, isChecked: boolean) => void;
 };
 
-const TaskItem = ({ task, deleteTask }: TaskItemProps) => {
+const TaskItem = ({
+  task,
+  deleteTask,
+  handleCheckboxChange,
+}: TaskItemProps) => {
+  console.log("task status:", task.isDone);
   return (
     <>
       <li key={task.id}>
-        <input type="checkbox" checked={task.isDone} />{" "}
+        <input
+          type="checkbox"
+          checked={task.isDone}
+          onChange={(event) =>
+            handleCheckboxChange(task.id, event.currentTarget.checked)
+          }
+        />{" "}
         <span>{task.title}</span>
-        <Button title="x" actionOnClick={() => deleteTask(task.id)} />
+        <Button actionOnClick={() => deleteTask(task.id)}>x</Button>
       </li>
     </>
   );

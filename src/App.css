@@ -7,10 +7,17 @@
   margin-right: 50px;
 }
 
-.error {
-  border: red 1px solid;
+.task-input {
+  border: 2px solid #d1d5db;
+  outline: none;
+}
+.task-input:focus {
+  border-color: #3b82f6;
+}
+.task-input.error {
+  border-color: #ef4444 !important;
 }
 
-.error-message {
-  color: red;
+.task-input.error:focus {
+  border-color: #dc2626 !important;
 }

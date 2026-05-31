@@ -1,58 +1,11 @@
-import { useMemo, useState } from "react";
 import "./App.css";
-import { Task, TodolistItem } from "./components/TodolistItem";
-
-export type FilterValues = "all" | "active" | "completed";
+import { TodolistItem } from "./components/TodolistItem";
 
 export const App = () => {
-  const [filter, setFilter] = useState<FilterValues>("all");
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const addNewTask = (taskTitle: string) => {
-    if (!taskTitle.trim()) return;
-    const newTask: Task = {
-      id: crypto.randomUUID(),
-      title: taskTitle.trim(),
-      isDone: false,
-    };
-    setTasks((prev) => [...prev, newTask]);
-  };
-  const filteredTasks = useMemo(() => {
-    switch (filter) {
-      case "active":
-        return tasks.filter((t) => !t.isDone);
-      case "completed":
-        return tasks.filter((t) => t.isDone);
-      default:
-        return tasks;
-    }
-  }, [tasks, filter]);
-
-  const deleteTaskFunc = (taskId: string) => {
-    setTasks((prevTasks) => prevTasks.filter((t) => t.id !== taskId));
-  };
-  const changeFilter = (filter: FilterValues) => {
-    setFilter(filter);
-  };
-  const handleCheckboxChange = (taskId: string, isChecked: boolean) => {
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === taskId ? { ...task, isDone: isChecked } : task,
-      ),
-    );
-  };
-  const deleteAllTasks = () => {
-    setTasks([]);
-  };
   return (
     <div className="app">
       <TodolistItem
         title="What to learn"
-        tasks={filteredTasks}
-        deleteTask={deleteTaskFunc}
-        changeFilter={changeFilter}
-        addNewTask={addNewTask}
-        deleteAllTasks={deleteAllTasks}
-        handleCheckboxChange={handleCheckboxChange}
       />
     </div>
   );

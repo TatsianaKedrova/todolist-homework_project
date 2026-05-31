@@ -1,26 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { Task } from "./TodolistItem";
+import React, { useEffect, useMemo, useState } from "react";
 import TaskItem from "./TaskItem";
+import { useTodolistStore } from "../store.zustand/useTodolistStore";
 
-type FullInputProps = {
-  tasks: Task[];
-  addNewTask: (taskTile: string) => void;
-  deleteTask: (taskId: string) => void;
- handleCheckboxChange: (
-    taskId: string,
-    isChecked: boolean,
-  ) => void;
-};
-
-export const FullInput = ({
-  tasks,
-  addNewTask,
-  deleteTask,
-  handleCheckboxChange,
-}: FullInputProps) => {
+export const FullInput = () => {
   let [title, setTitle] = useState<string>("");
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const tasks = useTodolistStore((state) => state.tasks);
+  const filter = useTodolistStore((state) => state.filter);
+  const addNewTask = useTodolistStore((state) => state.addNewTask);
 
+  const filteredTasks = useMemo(() => {
+    switch (filter) {
+      case "active":
+        return tasks.filter((t) => !t.isDone);
+      case "completed":
+        return tasks.filter((t) => t.isDone);
+      default:
+        return tasks;
+    }
+  }, [tasks, filter]);
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -54,17 +52,10 @@ export const FullInput = ({
       />
       <button onClick={handleAddTask}>+</button>
       <ul>
-        {tasks.length === 0 ? (
+        {filteredTasks.length === 0 ? (
           <p>No tasks available</p>
         ) : (
-          tasks.map((task) => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              deleteTask={deleteTask}
-              handleCheckboxChange={handleCheckboxChange}
-            />
-          ))
+          filteredTasks.map((task) => <TaskItem key={task.id} task={task} />)
         )}
       </ul>
     </div>

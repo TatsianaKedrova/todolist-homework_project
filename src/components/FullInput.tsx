@@ -15,14 +15,21 @@ export const FullInput = () => {
       inputRef.current.focus();
     }
   }, []);
+  const triggerError = () => {
+    setHasError(true);
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      setHasError(false);
+    }, 5000);
+  };
   useEffect(() => {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);
-  timeoutRef.current = window.setTimeout(() => {
-    setHasError(false);
-  }, 5000);
 
   const filteredTasks = useMemo(() => {
     switch (filter) {
@@ -36,25 +43,12 @@ export const FullInput = () => {
   }, [tasks, filter]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHasError(false);
     setTitle(e.currentTarget.value);
-  };
-  const isInputEmpty = () => {
-    const isEmpty = title.trim() === "";
-    setHasError(isEmpty);
-    return isEmpty;
   };
   const handleAddTask = () => {
     if (title.trim() === "") {
-      setHasError(true);
-
-      // Clear any older running timer so they don't fight each other
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-      timeoutRef.current = setTimeout(() => {
-        setHasError(false); // Turn off the error state after 5000ms
-      }, 5000);
-
+      triggerError();
       return;
     }
     addNewTask(title);
@@ -66,27 +60,42 @@ export const FullInput = () => {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (isInputEmpty()) return;
     if (event.key === "Enter") {
+      if (title.trim() === "") {
+        triggerError();
+        return;
+      }
       addNewTask(title);
       inputRef.current?.blur();
       setTitle("");
+      setHasError(false);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
     }
   };
-
+  console.log("has error: ", hasError);
   return (
     <div>
-      {hasError && <p id="error-message">Title is required</p>}
       <input
-        className={hasError ? "error" : ""}
+        className={`task-input ${hasError ? "error" : ""}`}
         ref={inputRef}
         type="text"
         placeholder="Type a new message"
         value={title}
         onChange={handleInputChange}
+        onBlur={() => {
+          setHasError(false);
+          if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+          }
+        }}
         onKeyDown={handleKeyDown}
       />
-      <button onClick={handleAddTask}>+</button>
+      <button onClick={handleAddTask} onMouseDown={(e) => e.preventDefault()}>
+        +
+      </button>
+      {hasError && <p id="error-message">Title is required</p>}
       <ul>
         {filteredTasks.length === 0 ? (
           <p>No tasks available</p>

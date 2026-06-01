@@ -43,17 +43,17 @@ export const FullInput = () => {
   }, [tasks, filter]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHasError(false);
     setTitle(e.currentTarget.value);
+    setHasError(false);
   };
   const handleAddTask = () => {
     if (title.trim() === "") {
       triggerError();
       return;
     }
+    setHasError(false);
     addNewTask(title);
     setTitle("");
-    setHasError(false);
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
@@ -74,7 +74,6 @@ export const FullInput = () => {
       }
     }
   };
-  console.log("has error: ", hasError);
   return (
     <div>
       <input
@@ -89,6 +88,9 @@ export const FullInput = () => {
           if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);
           }
+        }}
+        onFocus={() => {
+          setHasError(false);
         }}
         onKeyDown={handleKeyDown}
       />

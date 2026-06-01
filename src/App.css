@@ -38,3 +38,6 @@
   color: white;
   border-color: #0056b3;
 }
+.is-done {
+  opacity: 0.5;
+}

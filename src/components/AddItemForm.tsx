@@ -1,21 +1,14 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import TaskItem from "./TaskItem";
-import { useTodolistStore } from "../store.zustand/useTodolistStore";
-type FullInputProps = {
-  todolistId: string;
+import { useEffect, useRef, useState } from "react";
+
+type AddItemFormProps = {
+  onAdd: (title: string) => void;
+  placeholderText: string;
 };
-export const FullInput = ({ todolistId }: FullInputProps) => {
-  let [title, setTitle] = useState<string>("");
+export const AddItemForm = ({ onAdd, placeholderText }: AddItemFormProps) => {
+  const [inputValue, setInputValue] = useState<string>("");
   let [hasError, setHasError] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const tasks = useTodolistStore(
-    (state) => state.todolists[todolistId]?.tasks || [],
-  );
-  const filter = useTodolistStore(
-    (state) => state.todolists[todolistId]?.filter || "all",
-  );
-  const addNewTask = useTodolistStore((state) => state.addNewTask);
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -36,30 +29,18 @@ export const FullInput = ({ todolistId }: FullInputProps) => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);
-
-  const filteredTasks = useMemo(() => {
-    switch (filter) {
-      case "active":
-        return tasks.filter((t) => !t.isDone);
-      case "completed":
-        return tasks.filter((t) => t.isDone);
-      default:
-        return tasks;
-    }
-  }, [tasks, filter]);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.currentTarget.value);
+    setInputValue(e.currentTarget.value);
     setHasError(false);
   };
   const handleAddTask = () => {
-    if (title.trim() === "") {
+    if (inputValue.trim() === "") {
       triggerError();
       return;
     }
     setHasError(false);
-    addNewTask(title);
-    setTitle("");
+    onAdd(inputValue);
+    setInputValue("");
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
@@ -67,13 +48,13 @@ export const FullInput = ({ todolistId }: FullInputProps) => {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      if (title.trim() === "") {
+      if (inputValue.trim() === "") {
         triggerError();
         return;
       }
-      addNewTask(title);
+      onAdd(inputValue);
       inputRef.current?.blur();
-      setTitle("");
+      setInputValue("");
       setHasError(false);
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
@@ -81,13 +62,13 @@ export const FullInput = ({ todolistId }: FullInputProps) => {
     }
   };
   return (
-    <div>
+    <>
       <input
         className={`task-input ${hasError ? "error" : ""}`}
         ref={inputRef}
         type="text"
-        placeholder="Type a new message"
-        value={title}
+        placeholder={placeholderText}
+        value={inputValue}
         onChange={handleInputChange}
         onBlur={() => {
           setHasError(false);
@@ -104,13 +85,6 @@ export const FullInput = ({ todolistId }: FullInputProps) => {
         +
       </button>
       {hasError && <p id="error-message">Title is required</p>}
-      <ul>
-        {filteredTasks.length === 0 ? (
-          <p>No tasks available</p>
-        ) : (
-          filteredTasks.map((task) => <TaskItem key={task.id} task={task} />)
-        )}
-      </ul>
-    </div>
+    </>
   );
 };

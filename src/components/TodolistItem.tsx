@@ -1,15 +1,19 @@
 import { useTodolistStore } from "../store.zustand/useTodolistStore";
 import { Button } from "./Button";
-import { FullInput } from "./FullInput";
+import { FullInput } from "./TodolistFullInput";
 
 type TodolistItemProps = {
-  title: string;
   todolistId: string;
 };
 
-export const TodolistItem = ({ title, todolistId }: TodolistItemProps) => {
+export const TodolistItem = ({ todolistId }: TodolistItemProps) => {
   const deleteAllTasks = useTodolistStore((state) => state.deleteAllTasks);
   const changeFilter = useTodolistStore((state) => state.changeFilter);
+  const currentTodolist = useTodolistStore(
+    (state) => state.todolists[todolistId],
+  );
+  const title = currentTodolist?.title || "No title";
+  if (!currentTodolist) return null;
   return (
     <div>
       <h3>{title}</h3>
@@ -35,7 +39,10 @@ export const TodolistItem = ({ title, todolistId }: TodolistItemProps) => {
         >
           Completed
         </Button>
-        <Button actionOnClick={deleteAllTasks(todolistId)}>
+        <Button
+          actionOnClick={() => deleteAllTasks(todolistId)}
+          todolistId={todolistId}
+        >
           Delete all tasks
         </Button>
       </div>

@@ -9,7 +9,7 @@ type Props = {
 
 export const Button = ({ children, actionOnClick, todolistId }: Props) => {
   const filter = useTodolistStore(
-    (state) => state.todolists[todolistId]?.filter,
+    (state) => state.todolists[todolistId]?.filter || "all",
   );
   const firstChild = React.Children.toArray(children)[0];
 

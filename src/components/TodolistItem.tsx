@@ -17,12 +17,27 @@ export const TodolistItem = ({ title, todolistId }: TodolistItemProps) => {
         <FullInput todolistId={todolistId} />
       </div>
       <div className="filter-buttons">
-        <Button actionOnClick={() => changeFilter("all")}>All</Button>
-        <Button actionOnClick={() => changeFilter("active")}>Active</Button>
-        <Button actionOnClick={() => changeFilter("completed")}>
+        <Button
+          todolistId={todolistId}
+          actionOnClick={() => changeFilter("all")}
+        >
+          All
+        </Button>
+        <Button
+          todolistId={todolistId}
+          actionOnClick={() => changeFilter("active")}
+        >
+          Active
+        </Button>
+        <Button
+          todolistId={todolistId}
+          actionOnClick={() => changeFilter("completed")}
+        >
           Completed
         </Button>
-        <Button actionOnClick={deleteAllTasks}>Delete all tasks</Button>
+        <Button actionOnClick={deleteAllTasks(todolistId)}>
+          Delete all tasks
+        </Button>
       </div>
     </div>
   );

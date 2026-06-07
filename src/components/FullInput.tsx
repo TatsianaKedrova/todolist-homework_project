@@ -1,14 +1,20 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import TaskItem from "./TaskItem";
 import { useTodolistStore } from "../store.zustand/useTodolistStore";
-
-export const FullInput = () => {
+type FullInputProps = {
+  todolistId: string;
+};
+export const FullInput = ({ todolistId }: FullInputProps) => {
   let [title, setTitle] = useState<string>("");
   let [hasError, setHasError] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const tasks = useTodolistStore((state) => state.tasks);
-  const filter = useTodolistStore((state) => state.filter);
+  const tasks = useTodolistStore(
+    (state) => state.todolists[todolistId]?.tasks || [],
+  );
+  const filter = useTodolistStore(
+    (state) => state.todolists[todolistId]?.filter || "all",
+  );
   const addNewTask = useTodolistStore((state) => state.addNewTask);
   useEffect(() => {
     if (inputRef.current) {

@@ -19,9 +19,9 @@ export type TodolistState = {
   todolists: Record<string, TodolistType>;
   addTodolist: (title: string) => void;
   deleteTodolist: (todolistId: string) => void;
-  deleteTask: (taskId: string) => void;
+  deleteTask: (todolistId: string, taskId: string) => void;
   changeFilter: (filter: FilterValues) => void;
   addNewTask: (taskTitle: string) => void;
-  deleteAllTasks: () => void;
+  deleteAllTasks: (todolistId: string) => void;
   handleCheckboxChange: (taskId: string, isChecked: boolean) => void;
 };

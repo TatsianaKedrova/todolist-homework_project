@@ -4,15 +4,20 @@ import { useTodolistStore } from "../store.zustand/useTodolistStore";
 type Props = {
   children: React.ReactNode;
   actionOnClick?: () => void;
+  todolistId: string;
 };
 
-export const Button = ({ children, actionOnClick }: Props) => {
-  const filter = useTodolistStore((state) => state.filter);
+export const Button = ({ children, actionOnClick, todolistId }: Props) => {
+  const filter = useTodolistStore(
+    (state) => state.todolists[todolistId]?.filter,
+  );
   const firstChild = React.Children.toArray(children)[0];
 
   return (
     <button
-      className={filter === firstChild.toString().toLowerCase() ? "active-btn" : ""}
+      className={
+        filter === firstChild.toString().toLowerCase() ? "active-btn" : ""
+      }
       onClick={actionOnClick}
     >
       {children}

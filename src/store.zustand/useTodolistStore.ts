@@ -80,11 +80,20 @@ export const useTodolistStore = create<TodolistState>((set) => {
           },
         };
       }),
-    handleCheckboxChange: (taskId: string, isChecked: boolean) =>
-      set((state) => ({
-        tasks: state.tasks.map((task) =>
-          task.id === taskId ? { ...task, isDone: isChecked } : task,
-        ),
-      })),
+    handleCheckboxChange: (todolistId, taskId: string, isChecked: boolean) =>
+      set((state) => {
+        const currentTodolist = state.todolists[todolistId];
+        return {
+          todolists: {
+            ...state.todolists,
+            [todolistId]: {
+              ...currentTodolist,
+              tasks: currentTodolist.tasks.map((task) =>
+                task.id === taskId ? { ...task, isDone: isChecked } : task,
+              ),
+            },
+          },
+        };
+      }),
   };
 });

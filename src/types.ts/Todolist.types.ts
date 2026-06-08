@@ -12,6 +12,7 @@ export type TodolistType = {
   tasks: Task[];
 };
 export type TaskItemProps = {
+  todolistId: string;
   task: Task;
 };
 
@@ -23,5 +24,9 @@ export type TodolistState = {
   changeFilter: (todolistId: string, filter: FilterValues) => void;
   addNewTask: (todolistId: string, taskTitle: string) => void;
   deleteAllTasks: (todolistId: string) => void;
-  handleCheckboxChange: (taskId: string, isChecked: boolean) => void;
+  handleCheckboxChange: (
+    todolistId: string,
+    taskId: string,
+    isChecked: boolean,
+  ) => void;
 };

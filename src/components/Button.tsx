@@ -4,12 +4,12 @@ import { useTodolistStore } from "../store.zustand/useTodolistStore";
 type Props = {
   children: React.ReactNode;
   actionOnClick?: () => void;
-  todolistId: string;
+  todolistId?: string;
 };
 
 export const Button = ({ children, actionOnClick, todolistId }: Props) => {
-  const filter = useTodolistStore(
-    (state) => state.todolists[todolistId]?.filter || "all",
+  const filter = useTodolistStore((state) =>
+    todolistId ? state.todolists[todolistId]?.filter || "all" : "all",
   );
   const firstChild = React.Children.toArray(children)[0];
 

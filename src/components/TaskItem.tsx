@@ -2,7 +2,7 @@ import { useTodolistStore } from "../store.zustand/useTodolistStore";
 import { TaskItemProps } from "../types.ts/Todolist.types";
 import { Button } from "./Button";
 
-const TaskItem = ({ task }: TaskItemProps) => {
+const TaskItem = ({ todolistId, task }: TaskItemProps) => {
   const deleteTask = useTodolistStore((state) => state.deleteTask);
   const handleCheckboxChange = useTodolistStore(
     (state) => state.handleCheckboxChange,
@@ -13,11 +13,11 @@ const TaskItem = ({ task }: TaskItemProps) => {
         type="checkbox"
         checked={task.isDone}
         onChange={(event) =>
-          handleCheckboxChange(task.id, event.currentTarget.checked)
+          handleCheckboxChange(todolistId, task.id, event.currentTarget.checked)
         }
       />{" "}
       <span>{task.title}</span>
-      <Button actionOnClick={() => deleteTask(task.id)}>x</Button>
+      <Button actionOnClick={() => deleteTask(todolistId, task.id)}>x</Button>
     </li>
   );
 };

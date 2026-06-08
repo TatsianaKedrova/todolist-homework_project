@@ -16,8 +16,10 @@ export type TaskItemProps = {
   task: Task;
 };
 
-export type TodolistState = {
+export interface TodoState {
   todolists: Record<string, TodolistType>;
+}
+export interface TodoActions {
   addTodolist: (title: string) => void;
   deleteTodolist: (todolistId: string) => void;
   deleteTask: (todolistId: string, taskId: string) => void;
@@ -29,4 +31,6 @@ export type TodolistState = {
     taskId: string,
     isChecked: boolean,
   ) => void;
-};
+}
+
+export type TodolistState = TodoState & TodoActions;

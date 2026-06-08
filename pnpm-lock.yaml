@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      immer:
+        specifier: ^11.1.8
+        version: 11.1.8
       nanoid:
         specifier: ^5.1.11
         version: 5.1.11
@@ -19,7 +22,7 @@ importers:
         version: 19.0.0(react@19.0.0)
       zustand:
         specifier: ^5.0.14
-        version: 5.0.14(@types/react@19.0.2)(react@19.0.0)
+        version: 5.0.14(@types/react@19.0.2)(immer@11.1.8)(react@19.0.0)
     devDependencies:
       '@types/react':
         specifier: 19.0.2
@@ -679,6 +682,9 @@ packages:
     resolution: {integrity: sha512-OkToC372DtlQeje9/zHIo5CT8lRP/FUgEOKBEhU4e0abL7J7CD24fD9ohiLN5hagG/kWCYj4K5oaxxtj2Z0Dig==}
     engines: {node: '>=18'}
 
+  immer@11.1.8:
+    resolution: {integrity: sha512-/tbkHMW7y10Lx6i1crLjD4/OhNkRG+Fo7byZHtah0547nIeXYcpIXaUh0IAQY6gO5459qpGGYapcEOHtFXkIuA==}
+
   loupe@3.2.1:
     resolution: {integrity: sha512-CdzqowRJCeLU72bHvWqwRBBlLcMEtIvGrlvef74kMnV2AolS9Y8xUv1I0U/MNAWMhBlKIoyuEgoJ0t/bbwHbLQ==}
 
@@ -1324,6 +1330,8 @@ snapshots:
 
   globals@15.14.0: {}
 
+  immer@11.1.8: {}
+
   loupe@3.2.1: {}
 
   magic-string@0.30.21:
@@ -1480,7 +1488,8 @@ snapshots:
       siginfo: 2.0.0
       stackback: 0.0.2
 
-  zustand@5.0.14(@types/react@19.0.2)(react@19.0.0):
+  zustand@5.0.14(@types/react@19.0.2)(immer@11.1.8)(react@19.0.0):
     optionalDependencies:
       '@types/react': 19.0.2
+      immer: 11.1.8
       react: 19.0.0

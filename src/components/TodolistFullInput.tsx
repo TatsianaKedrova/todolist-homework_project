@@ -35,7 +35,9 @@ export const TodolistFullInput = ({ todolistId }: TodolistFullInputProps) => {
         {filteredTasks.length === 0 ? (
           <p>No tasks available</p>
         ) : (
-          filteredTasks.map((task) => <TaskItem todolistId={todolistId} key={task.id} task={task} />)
+          filteredTasks.map((task) => (
+            <TaskItem todolistId={todolistId} key={task.id} task={task} />
+          ))
         )}
       </ul>
     </div>

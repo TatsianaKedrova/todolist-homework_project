@@ -12,11 +12,16 @@ export const TodolistItem = ({ todolistId }: TodolistItemProps) => {
   const currentTodolist = useTodolistStore(
     (state) => state.todolists[todolistId],
   );
+  const deleteTodolist = useTodolistStore((state) => state.deleteTodolist);
   const title = currentTodolist?.title || "No title";
   if (!currentTodolist) return null;
   return (
     <div>
-      <h3>{title}</h3>
+      <div className="todo-title-container">
+        <h3>{title}</h3>
+        <Button actionOnClick={() => deleteTodolist(todolistId)}>X</Button>
+      </div>
+
       <div>
         <TodolistFullInput todolistId={todolistId} />
       </div>

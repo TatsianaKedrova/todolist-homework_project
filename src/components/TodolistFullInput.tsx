@@ -5,7 +5,7 @@ import { AddItemForm } from "./AddItemForm";
 type TodolistFullInputProps = {
   todolistId: string;
 };
-export const FullInput = ({ todolistId }: TodolistFullInputProps) => {
+export const TodolistFullInput = ({ todolistId }: TodolistFullInputProps) => {
   const tasks = useTodolistStore(
     (state) => state.todolists[todolistId]?.tasks || [],
   );
@@ -27,7 +27,10 @@ export const FullInput = ({ todolistId }: TodolistFullInputProps) => {
 
   return (
     <div>
-      <AddItemForm onAdd={addNewTask} placeholderText="Add a new task" />
+      <AddItemForm
+        onAdd={(args) => addNewTask(todolistId, args.title)}
+        placeholderText="Add a new task"
+      />
       <ul>
         {filteredTasks.length === 0 ? (
           <p>No tasks available</p>

@@ -20,8 +20,8 @@ export type TodolistState = {
   addTodolist: (title: string) => void;
   deleteTodolist: (todolistId: string) => void;
   deleteTask: (todolistId: string, taskId: string) => void;
-  changeFilter: (filter: FilterValues) => void;
-  addNewTask: (taskTitle: string) => void;
+  changeFilter: (todolistId: string, filter: FilterValues) => void;
+  addNewTask: (todolistId: string, taskTitle: string) => void;
   deleteAllTasks: (todolistId: string) => void;
   handleCheckboxChange: (taskId: string, isChecked: boolean) => void;
 };

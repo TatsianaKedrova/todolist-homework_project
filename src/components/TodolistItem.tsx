@@ -1,6 +1,6 @@
 import { useTodolistStore } from "../store.zustand/useTodolistStore";
 import { Button } from "./Button";
-import { FullInput } from "./TodolistFullInput";
+import { TodolistFullInput } from "./TodolistFullInput";
 
 type TodolistItemProps = {
   todolistId: string;
@@ -18,24 +18,24 @@ export const TodolistItem = ({ todolistId }: TodolistItemProps) => {
     <div>
       <h3>{title}</h3>
       <div>
-        <FullInput todolistId={todolistId} />
+        <TodolistFullInput todolistId={todolistId} />
       </div>
       <div className="filter-buttons">
         <Button
           todolistId={todolistId}
-          actionOnClick={() => changeFilter("all")}
+          actionOnClick={() => changeFilter(todolistId, "all")}
         >
           All
         </Button>
         <Button
           todolistId={todolistId}
-          actionOnClick={() => changeFilter("active")}
+          actionOnClick={() => changeFilter(todolistId, "active")}
         >
           Active
         </Button>
         <Button
           todolistId={todolistId}
-          actionOnClick={() => changeFilter("completed")}
+          actionOnClick={() => changeFilter(todolistId, "completed")}
         >
           Completed
         </Button>

@@ -12,19 +12,12 @@ export const App = () => {
   return (
     <div className="app">
       <AddItemForm
-        onAdd={addNewTodolist}
+        onAdd={(args) => addNewTodolist(args.title)}
         placeholderText="Add a new todolist"
       />
-      {todolistIdsArray.length === 0 ? (
-        <h2>No todolists are created</h2>
-      ) : (
-        todolistIdsArray.map((todolistId) => (
-          <TodolistItem
-            key={todolistId}
-            todolistId={todolistId}
-          />
-        ))
-      )}
+      {todolistIdsArray.map((todolistId) => (
+        <TodolistItem key={todolistId} todolistId={todolistId} />
+      ))}
     </div>
   );
 };

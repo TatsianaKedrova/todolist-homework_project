@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-
+type AddItemArgs = {
+  title: string;
+  todolistId?: string;
+};
 type AddItemFormProps = {
-  onAdd: (title: string) => void;
+  onAdd: (args: AddItemArgs) => void;
   placeholderText: string;
 };
 export const AddItemForm = ({ onAdd, placeholderText }: AddItemFormProps) => {
@@ -39,7 +42,7 @@ export const AddItemForm = ({ onAdd, placeholderText }: AddItemFormProps) => {
       return;
     }
     setHasError(false);
-    onAdd(inputValue);
+    onAdd({ title: inputValue });
     setInputValue("");
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -52,7 +55,7 @@ export const AddItemForm = ({ onAdd, placeholderText }: AddItemFormProps) => {
         triggerError();
         return;
       }
-      onAdd(inputValue);
+      onAdd({ title: inputValue });
       inputRef.current?.blur();
       setInputValue("");
       setHasError(false);

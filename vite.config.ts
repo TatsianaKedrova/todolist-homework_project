@@ -8,4 +8,5 @@ export default defineConfig({
     port: 3000, // Keeps the same port CRA used
     open: true, // Automatically opens the browser
   },
+  base: "/todolist-homework_project/",
 });

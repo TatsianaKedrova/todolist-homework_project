@@ -11,6 +11,7 @@ export const AddItemForm = ({ onAdd, placeholderText }: AddItemFormProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   let [hasError, setHasError] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
     if (inputRef.current) {

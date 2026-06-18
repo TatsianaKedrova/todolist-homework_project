@@ -4,11 +4,16 @@ type AddItemArgs = {
   todolistId?: string;
 };
 type AddItemFormProps = {
+  initialTitle?: string;
   onAdd: (args: AddItemArgs) => void;
   placeholderText: string;
 };
-export const AddItemForm = ({ onAdd, placeholderText }: AddItemFormProps) => {
-  const [inputValue, setInputValue] = useState<string>("");
+export const AddItemForm = ({
+  initialTitle = "",
+  onAdd,
+  placeholderText,
+}: AddItemFormProps) => {
+  const [inputValue, setInputValue] = useState<string>(initialTitle);
   let [hasError, setHasError] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 

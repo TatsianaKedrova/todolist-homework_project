@@ -31,6 +31,11 @@ export interface TodoActions {
     taskId: string,
     isChecked: boolean,
   ) => void;
+  updateTitle: (todolistId: string, newtitle: string, taskId?: string) => void;
 }
 
 export type TodolistState = TodoState & TodoActions;
+export type EditableType = {
+  title: string;
+  todolistId: string;
+};

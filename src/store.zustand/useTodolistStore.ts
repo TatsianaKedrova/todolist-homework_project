@@ -57,6 +57,20 @@ export const useTodolistStore = create<TodolistState>()(
           const task = currentTodolist.tasks.find((task) => task.id === taskId);
           if (task) task.isDone = isChecked;
         }),
+      updateTitle: (todolistId, newTitle, taskId) => {
+        set((state) => {
+          const todolist = state.todolists[todolistId];
+          if (!todolist) return;
+          if (taskId) {
+            const task = todolist.tasks.find((t) => t.id === taskId);
+            if (task) {
+              task.title = newTitle;
+            }
+          } else {
+            todolist.title = newTitle;
+          }
+        });
+      },
     })),
 
     { name: "todo-app-storage" },

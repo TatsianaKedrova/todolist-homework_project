@@ -1,6 +1,7 @@
 import { useTodolistStore } from "../store.zustand/useTodolistStore";
 import { TaskItemProps } from "../types.ts/Todolist.types";
 import { Button } from "./Button";
+import { EditableSpan } from "./EditableSpan";
 
 const TaskItem = ({ todolistId, task }: TaskItemProps) => {
   const deleteTask = useTodolistStore((state) => state.deleteTask);
@@ -16,7 +17,11 @@ const TaskItem = ({ todolistId, task }: TaskItemProps) => {
           handleCheckboxChange(todolistId, task.id, event.currentTarget.checked)
         }
       />{" "}
-      <span>{task.title}</span>
+      <EditableSpan
+        title={task.title}
+        todolistId={todolistId}
+        taskId={task.id}
+      />
       <Button actionOnClick={() => deleteTask(todolistId, task.id)}>x</Button>
     </li>
   );

@@ -3,12 +3,12 @@ import { EditableType } from "../types.ts/Todolist.types";
 import { AddItemForm } from "./AddItemForm";
 import { useTodolistStore } from "../store.zustand/useTodolistStore";
 
-export const EditableSpan = ({ todolistId, title }: EditableType) => {
+export const EditableSpan = ({ todolistId, title, taskId }: EditableType) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const updateTitle = useTodolistStore((state) => state.updateTitle);
   const onChangeTitle = (title: string) => {
-    updateTitle(todolistId, title);
+    updateTitle(todolistId, title, taskId);
     setIsEditing(false);
   };
 
@@ -22,6 +22,7 @@ export const EditableSpan = ({ todolistId, title }: EditableType) => {
           placeholderText={"Type new title"}
           initialTitle={title}
           onAdd={(args) => onChangeTitle(args.title)}
+          onBlurAction={() => setIsEditing(false)}
         />
       ) : (
         <span onDoubleClick={switchToEditMode}>{title}</span>

@@ -1,5 +1,6 @@
 import { useTodolistStore } from "../store.zustand/useTodolistStore";
 import { Button } from "./Button";
+import { EditableSpan } from "./EditableSpan";
 import { TodolistFullInput } from "./TodolistFullInput";
 
 type TodolistItemProps = {
@@ -18,7 +19,7 @@ export const TodolistItem = ({ todolistId }: TodolistItemProps) => {
   return (
     <div>
       <div className="todo-title-container">
-        <h3>{title}</h3>
+        <EditableSpan title={title} todolistId={todolistId} />
         <Button actionOnClick={() => deleteTodolist(todolistId)}>X</Button>
       </div>
 

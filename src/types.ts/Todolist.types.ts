@@ -38,4 +38,5 @@ export type TodolistState = TodoState & TodoActions;
 export type EditableType = {
   title: string;
   todolistId: string;
+  taskId?: string;
 };

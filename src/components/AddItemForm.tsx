@@ -7,11 +7,13 @@ type AddItemFormProps = {
   initialTitle?: string;
   onAdd: (args: AddItemArgs) => void;
   placeholderText: string;
+  onBlurAction?: () => void;
 };
 export const AddItemForm = ({
   initialTitle = "",
   onAdd,
   placeholderText,
+  onBlurAction,
 }: AddItemFormProps) => {
   const [inputValue, setInputValue] = useState<string>(initialTitle);
   let [hasError, setHasError] = useState<boolean>(false);
@@ -79,12 +81,16 @@ export const AddItemForm = ({
         placeholder={placeholderText}
         value={inputValue}
         onChange={handleInputChange}
-        onBlur={() => {
-          setHasError(false);
-          if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
-          }
-        }}
+        onBlur={
+          onBlurAction
+            ? onBlurAction
+            : () => {
+                setHasError(false);
+                if (timeoutRef.current) {
+                  clearTimeout(timeoutRef.current);
+                }
+              }
+        }
         onFocus={() => {
           setHasError(false);
         }}

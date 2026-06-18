@@ -95,6 +95,7 @@ export const AddItemForm = ({
           setHasError(false);
         }}
         onKeyDown={handleKeyDown}
+        autoFocus
       />
       <button onClick={handleAddTask} onMouseDown={(e) => e.preventDefault()}>
         +

@@ -2,12 +2,12 @@
 //1
 export const delay = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
-async function trainDelay() {
-  console.log("1. Requesting local data...");
-  await delay(3000);
+// async function trainDelay() {
+//   console.log("1. Requesting local data...");
+//   await delay(3000);
 
-  console.log("2. Data successfully loaded!");
-}
+//   console.log("2. Data successfully loaded!");
+// }
 
 //2
 export const promise2 = () => {

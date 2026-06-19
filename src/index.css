@@ -10,12 +10,11 @@
 
 body {
   margin: 0;
-  display: flex;
-  min-width: 320px;
   min-height: 100vh;
+  background-color: #f8fafc; /* Matches your slate-50 background perfectly */
 }
 
+/* Clear out the giant native h1 sizing so your Tailwind text classes work cleanly */
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  margin: 0;
 }
